@@ -19,7 +19,7 @@
                 <div class="row m-3">
                     <div class="col-md-12">
                         <h3 class="float-start" id="greeting">Good Evening</h3>
-                        <h3 class="float-end">Enjoy Spotify <i class="fa-solid fa-music"></i> <i class="fa-solid fa-music"></i> <i class="fa-solid fa-music"></i></h3>
+                        <h3 class="float-end">Enjoy Music <i class="fa-solid fa-music"></i> <i class="fa-solid fa-music"></i> <i class="fa-solid fa-music"></i></h3>
                     </div>
                 </div>
                 <div class="row" id="music-list">
