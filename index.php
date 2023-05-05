@@ -182,7 +182,7 @@
                         </div>
                         <div class="form-group mb-3 text-center">
                             <div class="col-md-6">
-                                <img src="./images/music-logo.jpg" alt="Image" class="img-fluid img-thumbnail bg-gradient bg-dark" id="dImage2">
+                                <img src="./resources/images/music_icon.png" alt="Image" class="img-fluid img-thumbnail bg-gradient bg-dark" id="dImage2">
                             </div>
                         </div>
                     </form>
