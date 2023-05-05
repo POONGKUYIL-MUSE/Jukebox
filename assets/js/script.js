@@ -1,12 +1,12 @@
 const loaderHTML = document.createElement('div');
 loaderHTML.setAttribute('id', 'pre-loader');
 loaderHTML.innerHTML = "<div id='loader-container'><div></div><div></div><div></div></div>";
-window.start_loader = function() {
+window.start_loader = function () {
     if (!document.getElementById('pre-loader') || (!!document.getElementById('pre-loader') && document.getElementById('pre-loader').length <= 0)) {
         document.querySelector('body').appendChild(loaderHTML);
     }
 }
-window.end_loader = function() {
+window.end_loader = function () {
     if (!!document.getElementById('pre-loader')) {
         document.getElementById('pre-loader').remove();
     }
@@ -15,7 +15,7 @@ window.end_loader = function() {
 function displayImg(input, displayTo) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             $('#' + displayTo).attr('src', e.target.result);
             $(input).siblings('.custom-file-label').html(input.files[0].name)
         }
@@ -37,8 +37,7 @@ function displayFileText(input) {
 var audio = new Audio();
 var slider;
 var currentPlayID;
-
-$(function() {
+$(function () {
     console.log("comes");
     setTimeout(() => {
         end_loader()
@@ -48,14 +47,14 @@ $(function() {
     var hrs = myDate.getHours();
     var greet;
     if (hrs < 12)
-    greet = 'Good Morning';
+        greet = 'Good Morning';
     else if (hrs >= 12 && hrs <= 17)
-    greet = 'Good Afternoon';
+        greet = 'Good Afternoon';
     else if (hrs >= 17 && hrs <= 24)
-    greet = 'Good Evening';
-    document.getElementById('greeting').innerHTML ='<b>' + greet + '</b>';
+        greet = 'Good Evening';
+    document.getElementById('greeting').innerHTML = '<b>' + greet + '</b>';
 
-    $('#music-form, #update-music-form').on("submit", function(e) {
+    $('#music-form, #update-music-form').on("submit", function (e) {
         console.log("submitting form");
         e.preventDefault()
         var _this = $(this)
@@ -81,7 +80,7 @@ $(function() {
                 alert("An error occured");
                 end_loader();
             },
-            success: function(resp) {
+            success: function (resp) {
                 if (typeof resp == 'object' && resp.status == 'success') {
                     alert(resp.msg);
                     location.reload();
@@ -99,7 +98,7 @@ $(function() {
         })
     })
 
-    $('.edit').click(function() {
+    $('.edit').click(function () {
         var id = $(this).attr('data-id')
         start_loader();
         $.ajax({
@@ -112,7 +111,7 @@ $(function() {
                 alert("An error occurred");
                 end_loader()
             },
-            success: function(resp) {
+            success: function (resp) {
                 var _modal = $('#update_music_modal')
                 if (resp.status == 'success') {
                     var data = resp.data;
@@ -133,7 +132,7 @@ $(function() {
             }
         })
     })
-    $('.delete').on('click',function() {
+    $('.delete').on('click', function () {
         var id = $(this).attr('data-id')
         var conf = confirm("Are you sure to delete this audio?");
         if (conf === true) {
@@ -141,7 +140,7 @@ $(function() {
         }
     })
 
-    $('.play').on('click', function() {
+    $('.play').on('click', function () {
         var _this = $(this)
         var id = $(this).attr('data-id')
         var type = $(this).attr('data-type')
@@ -157,7 +156,7 @@ $(function() {
                     alert("An error occurred");
                     end_loader()
                 },
-                success: function(resp) {
+                success: function (resp) {
                     var _modal = $('#update_music_modal')
                     if (resp.status == 'success') {
                         var data = resp.data
@@ -199,7 +198,7 @@ $(function() {
         }
     })
 
-    $('#play-btn').click(function() {
+    $('#play-btn').click(function () {
         if (audio.src != '') {
             var action = $(this).attr('data-value')
             if (action == "pause") {
@@ -213,7 +212,7 @@ $(function() {
             }
         }
     })
-    $('#stop-btn').click(function() {
+    $('#stop-btn').click(function () {
         if (audio.src != '') {
             $('#play-btn').html('<i class="fa fa-play"></i>')
             $('#play-btn').attr('data-value', 'play')
@@ -224,17 +223,17 @@ $(function() {
 
 
     // Playback Slider Moved Function 
-    $('#playBackSlider').on('mousedown', function() {
+    $('#playBackSlider').on('mousedown', function () {
         if (audio.src != '') {
             clearInterval(slider)
-            $(this).on('mousemove', function() {
+            $(this).on('mousemove', function () {
                 audio.pause()
                 audio.currentTime = (audio.duration * ($(this).val() / 100));
                 $('#currentTime').text(String(Math.floor(audio.currentTime / 60)).padStart(2, '0') + ":" + String(Math.floor(60 * Math.abs((audio.currentTime / 60) - Math.floor(audio.currentTime / 60)))).padStart(2, '0'))
             })
         }
     })
-    $('#playBackSlider').on('mouseup', function() {
+    $('#playBackSlider').on('mouseup', function () {
         if (audio.src != '') {
             $(this).off('mousemove')
             audio.currentTime = (audio.duration * ($(this).val() / 100));
@@ -251,8 +250,8 @@ $(function() {
     })
 
     // volume slider
-    $('#volume').on('mousedown', function(e) {
-        $(this).on('mousemove', function() {
+    $('#volume').on('mousedown', function (e) {
+        $(this).on('mousemove', function () {
             var vol = $(this).val() / 100
             audio.volume = vol
             if (vol == 0) {
@@ -264,21 +263,35 @@ $(function() {
             }
         })
     })
-    $('#volume').on('mouseup', function(e) {
+    $('#volume').on('mouseup', function (e) {
         $(this).off('mousemove')
     })
 
+    // Shuffle Btn
+    $('#shuffle-btn').click(function () {
+        console.log("shuffle")
+
+        var songs = $("#music-list").children();
+        min_num = 0
+        max_num = songs.length-1
+        var random = Math.floor(Math.random() * (max_num - min_num + 1) + min_num)
+        console.log(random);
+
+        $("#music-list .item").eq(random).find('.play').trigger('click')
+    })
+
     // Next Btn
-    $('#next-btn').click(function() {
-            if (currentPlayID > 0) {
-                var currentIndex = $('#music-list .item[data-id="' + currentPlayID + '"]').index();
-                if (!!$('#music-list .item').eq(currentIndex + 1)) {
-                    $('#music-list .item').eq(currentIndex + 1).find('.play').trigger('click')
-                }
+    $('#next-btn').click(function () {
+        if (currentPlayID > 0) {
+            var currentIndex = $('#music-list .item[data-id="' + currentPlayID + '"]').index();
+            if (!!$('#music-list .item').eq(currentIndex + 1)) {
+                $('#music-list .item').eq(currentIndex + 1).find('.play').trigger('click')
             }
-        })
-        // Previous Btn
-    $('#prev-btn').click(function() {
+        }
+    })
+
+    // Previous Btn
+    $('#prev-btn').click(function () {
         if (currentPlayID > 0) {
             var currentIndex = $('#music-list .item[data-id="' + currentPlayID + '"]').index();
             if ((currentIndex - 1) == -1) {
@@ -290,7 +303,7 @@ $(function() {
             }
         }
     })
-    audio.onended = function() {
+    audio.onended = function () {
         console.log('Next Track')
         $('#next-btn').trigger('click')
         if (audio.src != '') {

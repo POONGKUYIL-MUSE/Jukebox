@@ -77,7 +77,7 @@
                     <button class="btn btn-sm btn-dark text-light" id="next-btn"><i class="fa fa-step-forward"></i></button>
                 </div>
                 <div class="mx-1">
-                    <button class="btn btn-sm btn-dark text-light" id="repeat-btn"><i class="fa-solid fa-repeat"></i></button>
+                    <button class="btn btn-sm btn-dark text-light visually-hidden" id="repeat-btn"><i class="fa-solid fa-repeat"></i></button>
                 </div>
             </div>
         </div>
